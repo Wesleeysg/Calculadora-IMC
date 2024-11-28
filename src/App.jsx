@@ -7,6 +7,8 @@ function App() {
   const [peso, setPeso] = useState("");
   const [messageImc, setMessageImc] = useState("");
   const [resultImc, setResultImc] = useState("");
+  const [IdealImc, setIdealImc] = useState("");
+  const [resultIdealImc, setResultIdealImc] = useState("");
   const [textButton, setTextButton] = useState("Calcular");
 
   const imcCalculator = async () => {
@@ -16,6 +18,21 @@ function App() {
       const imc = pesoKg / (alturaMetros * alturaMetros);
       setResultImc(imc.toFixed(2));
       setMessageImc("Seu IMC é: ");
+
+      try{
+        const response = await axios.post("http://localhost:3000/classificacaoImc",{
+        imc: imc.toFixed(2),
+        });
+
+        const classificacao = response.data.classificacao;
+        setResultIdealImc(classificacao);
+      }catch (error) {
+        console.error("Erro ao classificar IMC:", error);
+        setIdealImc("Erro ao classificar IMC. Tente novamente.");
+      }
+      
+
+      setIdealImc("Sua classificação por IMC é: ");
 
       try {
         const response = await axios.post("http://localhost:3000/saveImc", {
@@ -38,6 +55,8 @@ function App() {
     setPeso("");
     setMessageImc("");
     setResultImc("");
+    setIdealImc("");
+    setResultIdealImc("");
   };
 
   return (
@@ -74,6 +93,11 @@ function App() {
       <div className="result">
         <p>{messageImc}</p>
         <p>{resultImc}</p>
+      </div>
+
+      <div className="result">
+        <p>{IdealImc}</p>
+        <p>{resultIdealImc}</p>
       </div>
     </div>
   );

@@ -28,7 +28,6 @@ connection.connect((err) => {
     if (!altura || !peso || !imc) {
         return res.status(400).send("Dados incompletos!");
     }
-    console.log("Requisição chegou");
 
     const query = "INSERT INTO imc_data (altura, peso, imc) VALUES (?, ?, ?)";
 
@@ -41,6 +40,26 @@ connection.connect((err) => {
         }
       });
     });
+
+    app.post("/classificacaoImc",(req,res) =>{
+      const{imc} = req.body;
+      console.log("Requisição chegou");
+
+      if (!imc) {
+        return res.status(400).send("IMC não recebido");
+      }
+      let classificacao;
+      if(imc >= 30)
+        classificacao ="Obesidade";
+      else if(imc > 24.9)
+        classificacao ="Sobrepeso";
+      else if(imc > 18.5)
+        classificacao ="Peso Normal";
+      else
+        classificacao ="Abaixo do peso";
+    
+        return res.json({classificacao});
+    })
 
   // Iniciar o servidor na porta 3000
 app.listen(3000, () => {
