@@ -2,23 +2,25 @@
 
 ##** Apresentação**
 
-A **Calculadora de IMC** é uma aplicação web simples que permite aos usuários calcular o Índice de Massa Corporal (IMC), visualizar a classificação do IMC (como peso normal, sobrepeso, obesidade, etc.), e salvar os dados calculados em um banco de dados MySQL.
+A **Calculadora de IMC** é uma aplicação web simples que permite aos usuários calcular o Índice de Massa Corporal (IMC), visualizar a classificação do IMC (como peso normal, sobrepeso, obesidade, etc.), e salvar os dados calculados em um banco de dados MySQL, para consulta-los na tela de histórco posteriormente.
 
 **A aplicação é dividida em duas partes:**
 - **Frontend**: Interface de usuário criada com React.js, utilizando o Vite como bundler.
-- **Backend**: Servidor em Node.js com Express, conectado ao banco de dados MySQL para salvar e classificar os dados do IMC.
+- **Backend**: Servidor em Node.js com Express, conectado ao banco de dados MySQL para salvar, classificar os dados do IMC e Fazer a busca de dados do banco.
 
 **## Objetivo**
 
-O objetivo principal dessa aplicação é calcular o IMC a partir da altura e peso fornecidos pelo usuário, classificar o resultado de acordo com a tabela de IMC e salvar os dados no banco de dados para posterior uso.
+O objetivo principal dessa aplicação é calcular o IMC a partir da altura e peso fornecidos pelo usuário, classificar o resultado de acordo com a tabela de IMC e salvar os dados no banco de dados para posterior consulta.
 
 **## Funcionalidades**
 
 - Cálculo do IMC com base em altura e peso.
 - Classificação do IMC em: Abaixo do Peso, Peso Normal, Sobrepeso e Obesidade.
+- Consulta de histórico do calculo IMC.
 - Armazenamento dos dados calculados (altura, peso, IMC) no banco de dados MySQL.
 - Interface de usuário simples com React.js.
 - Backend em Node.js utilizando Express para fornecer as APIs necessárias.
+  
 
 **## Instalação de Dependências**
 
@@ -35,6 +37,8 @@ cd calculadora-imc
 **# Instale as dependências**
 npm install
 npm install axios
+npm install react-router-dom
+npm install date-fns
 
 2. Instalar dependências do Backend (Node.js + MySQL)
 No diretório do backend, execute os seguintes passos:
@@ -93,6 +97,8 @@ calculadora-imc/
 |── src/                  #Arquivos do FrontEnd(React)
 │     ├── App.jsx
 │     ├── App.css
+|     ├── Home.jsx
+|     ├── Histórico.jsx
 │     └── ...
 │
 ├── backend/                 # Arquivos do backend (Node.js)
