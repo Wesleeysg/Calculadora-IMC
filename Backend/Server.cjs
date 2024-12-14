@@ -8,9 +8,9 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'root',
+  host: 'mysql-aula.cuebxlhckhcy.us-east-1.rds.amazonaws.com',
+  user: 'mysqlaula',
+  password: 'MySQLAula123!', // Substitua pela sua senha do MySQL
   database: 'healthyfit'
 });
 
@@ -28,6 +28,7 @@ connection.connect((err) => {
     if (!altura || !peso || !imc) {
         return res.status(400).send("Dados incompletos!");
     }
+    
 
     const query = "INSERT INTO imc_data (altura, peso, imc) VALUES (?, ?, ?)";
 
@@ -43,7 +44,6 @@ connection.connect((err) => {
 
     app.post("/classificacaoImc",(req,res) =>{
       const{imc} = req.body;
-      console.log("Requisição chegou");
 
       if (!imc) {
         return res.status(400).send("IMC não recebido");
@@ -59,6 +59,19 @@ connection.connect((err) => {
         classificacao ="Abaixo do peso";
     
         return res.json({classificacao});
+    })
+
+    app.get("/getImcData", (req, res) =>{
+      const query = "SELECT * FROM imc_data";
+    console.log("Requisição histórico chegou!")
+      connection.query(query, (err, results) =>{
+        if(err){
+          console.error("Erro ao buscar os dados:", err);
+          res.status(500).send("Erro ao buscar os dados")
+        } else{
+          res.status(200).json(results);
+        }
+      })
     })
 
   // Iniciar o servidor na porta 3000
